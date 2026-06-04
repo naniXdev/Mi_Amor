@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Our Memories</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+
+        background: radial-gradient(
+          circle at center,
+          #5a0015 0%,
+          #30000a 45%,
+          #120003 100%
+        );
+
+        color: white;
+        opacity: 1;
+        transform: scale(1);
+        transition:
+          opacity 1.5s ease,
+          transform 1.5s ease;
+      }
+
+      .memory-board {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+
+      /* Center photo */
+      .q1 {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        width: 420px; /* biggest */
+        z-index: 2;
+      }
+
+      /* Right-top of q1 */
+      .q3 {
+        position: absolute;
+
+        left: 60%;
+        top: 3%;
+
+        width: 280px;
+
+        transform: rotate(8deg);
+
+        z-index: 4;
+      }
+
+      /* Left-bottom of q1 */
+      .q5 {
+        left: 32%;
+        top: 48%;
+
+        width: 340px;
+
+        transform: rotate(-10deg);
+        z-index: 5;
+      }
+      /* q44 - right side */
+      .q44 {
+        position: absolute;
+        left: 68%;
+        top: 72%;
+
+        width: 280px;
+
+        transform: rotate(10deg);
+
+        z-index: 3;
+      }
+
+      /* q11 - bottom left */
+      .q11 {
+        position: absolute;
+        left: 3%;
+        top: 50%;
+
+        width: 300px;
+
+        transform: rotate(-8deg);
+
+        z-index: 2;
+      }
+
+      /* q7 - between q11 and q44 */
+      .q7 {
+        position: absolute;
+        left: 42%;
+        top: 75%;
+
+        width: 250px;
+
+        transform: rotate(5deg);
+
+        z-index: 10;
+      }
+
+      .q2 {
+        position: absolute;
+
+        left: 47%;
+        top: 92%;
+
+        width: 220px;
+
+        transform: rotate(-7deg);
+
+        z-index: 5;
+      }
+      .q33 {
+        position: absolute;
+
+        left: 8%;
+        top: 96%;
+
+        width: 240px;
+
+        transform: rotate(-6deg);
+
+        z-index: 2;
+      }
+      .q66 {
+        position: absolute;
+
+        left: 6%;
+        top: 120%;
+
+        width: 220px;
+
+        transform: rotate(4deg);
+
+        z-index: 1;
+      }
+      /* Below q7 */
+      .q4 {
+        position: absolute;
+
+        left: 33%;
+        top: 108%;
+
+        width: 230px;
+
+        transform: rotate(-12deg);
+
+        z-index: 1;
+      }
+
+      /* Bottom-right corner */
+      .q55 {
+        position: absolute;
+
+        left: 72%;
+        top: 122%;
+
+        width: 250px;
+
+        transform: rotate(8deg);
+
+        z-index: 2;
+      }
+      .q77 {
+        position: absolute;
+
+        left: 36%;
+        top: 120%;
+
+        width: 220px;
+
+        transform: rotate(-8deg);
+
+        z-index: 10; /* above q7 and q2 */
+      }
+      .q8 {
+        position: absolute;
+
+        left: 10%;
+        top: 140%;
+
+        width: 210px;
+
+        transform: rotate(-7deg);
+
+        z-index: 1;
+      }
+      .q88 {
+        position: absolute;
+
+        left: 30%;
+        top: 140%;
+
+        width: 220px;
+
+        transform: rotate(0deg);
+
+        z-index: 2;
+      }
+      .t {
+        position: absolute;
+
+        left: 50%;
+        top: 25%;
+
+        width: 260px;
+        height: 50px;
+
+        object-fit: cover;
+
+        transform: translate(-50%, -50%);
+        z-index: 5;
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      }
+      .q6 {
+        position: absolute;
+
+        left: 50%;
+        top: 60%;
+
+        width: 220px;
+
+        transform: rotate(8deg);
+
+        z-index: 6; /* above t */
+      }
+      #finalBtn {
+        position: absolute;
+
+        left: 86%;
+        top: 170%;
+
+        padding: 8px 16px;
+
+        border: none;
+        border-radius: 20px;
+
+        background: #c9a227;
+
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        z-index: 10;
+      }
+      #finalBtn:hover {
+        transform: scale(1.05);
+      }
+      .photo img {
+        width: 100%;
+        display: block;
+
+        border-radius: 12px;
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="memory-board">
+      <div class="photo q1">
+        <img src="image/q1.png" />
+      </div>
+
+      <div class="photo q3">
+        <img src="image/q3.png" />
+      </div>
+
+      <div class="photo q5">
+        <img src="image/q5.png" />
+      </div>
+      <div class="photo q44">
+        <img src="image/q44.png" />
+      </div>
+
+      <div class="photo q11">
+        <img src="image/q11.png" />
+      </div>
+
+      <div class="photo q7">
+        <img src="image/q7.png" />
+      </div>
+
+      <div class="photo q2">
+        <img src="image/q2.png" />
+      </div>
+      <div class="photo q33">
+        <img src="image/q33.png" />
+      </div>
+      <div class="photo q66">
+        <img src="image/q66.png" />
+      </div>
+      <div class="photo q4">
+        <img src="image/q4.png" />
+      </div>
+
+      <div class="photo q55">
+        <img src="image/q55.png" />
+      </div>
+      <div class="photo q77">
+        <img src="image/q77.png" />
+      </div>
+      <div class="photo q8">
+        <img src="image/q8.png" />
+      </div>
+      <div class="photo q88">
+        <img src="image/q88.png" />
+      </div>
+      <div class="photo t">
+        <img src="image/t.jpg" />
+      </div>
+      <div class="photo q6">
+        <img src="image/q6.png" />
+      </div>
+      <button id="finalBtn" onclick="goTobeat()">Next ❤️</button>
+    </div>
+  </body>
+  <script>
+    document.getElementById("finalBtn").onclick = () => {
+      document.body.style.opacity = "0";
+      document.body.style.transform = "scale(1.05)";
+
+      setTimeout(() => {
+        window.location.href = "beat.html";
+      }, 1500);
+    };
+  </script>
+</html>

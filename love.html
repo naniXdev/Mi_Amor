@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      #nextPageBtn {
+        position: fixed;
+
+        right: 30px;
+        bottom: 30px;
+
+        opacity: 0;
+        transform: translateY(20px);
+
+        padding: 10px 22px;
+
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+
+        background: linear-gradient(135deg, #ff8fb1, #ff5d8f);
+        color: white;
+
+        cursor: pointer;
+
+        box-shadow: 0 8px 20px rgba(255, 93, 143, 0.35);
+
+        transition: all 0.6s ease;
+
+        z-index: 9999;
+      }
+
+      #nextPageBtn.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #nextPageBtn:hover {
+        transform: scale(1.08);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Read without blushing😂❤️</h1>
+    <p>Dear Teddy</p>
+    <p>
+      Happy Birthday, My Love! ❤️ Today is your day, and I want to take a moment
+      to celebrate the amazing person you are. Sometimes I think about how lucky
+      I am that our paths crossed lezawm tela ashekmeh😂yante neger eko
+      ayweram🫢still gen i'm happy . Out of all the people in this world, I
+      found someone who makes me smile when I need it most, laughs with me over
+      the smallest things, and fills my life with so much love and happiness
+      (endaymokeh demo😉). You are one of the most wonderful people I have ever
+      met, and I feel so grateful to have you in my life🥰. Your kindness, your
+      smile, your strength, and the way you care about the people around you are
+      just a few of the things that make you so special. Every day with you
+      brings something beautiful, whether it's laughter, comfort, or simply the
+      happiness of knowing you're there. On your birthday🥳, I want you to know
+      how much you mean to me🌍. I am proud of the person you are and of
+      everything you continue to become. I hope this new year of your life
+      brings you happiness, success, good health, and all the opportunities you
+      deserve🥹. And every blessing your heart desires(lela neger endataseb demo
+      egerehn new meseberew💀). Thank you for your love, your patience, your
+      support, and for being such an important part of my life. No matter what
+      comes our way, I am grateful for every moment we share together. No matter
+      where life takes us, I hope we continue creating beautiful memories
+      together and facing every challenge hand in hand.(yaw lewegu new enji
+      meheja yelehm miyawatahen takaleh "obviously Meeeeeeee✨" alebeleziya
+      waaaa🔪). Today, I celebrate you, not only because it is your birthday,
+      but because you are truly someone worth celebrating every day.I hope your
+      birthday is filled with love, joy, laughter, and everything that makes you
+      happy.🎁🧸🎉
+    </p>
+    <p>Happy Birthday, Teddy.</p>
+    <p>❤️ Forever yours,</p>
+    <p>Ruha🌸</p>
+    <button id="nextPageBtn" onclick="goNext()">Continue ❤️</button>
+  </body>
+  <script>
+    window.showButton = function () {
+      document.getElementById("nextPageBtn").classList.add("show");
+    };
+    function goNext() {
+      window.top.location.href = "memories.html";
+    }
+  </script>
+</html>

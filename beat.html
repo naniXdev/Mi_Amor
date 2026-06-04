@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECG Heart Animation</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        transition: opacity 1.5s ease;
+      }
+
+      svg {
+        width: 100%;
+        height: 350px;
+      }
+
+      #ecg {
+        fill: none;
+        stroke: #ff4da6;
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+
+        filter: drop-shadow(0 0 5px #ff4da6) drop-shadow(0 0 10px #ff4da6)
+          drop-shadow(0 0 20px #ff4da6) drop-shadow(0 0 40px #ff4da6);
+
+        stroke-dasharray: 5000;
+        stroke-dashoffset: 5000;
+
+        animation: drawLine 7s linear forwards;
+      }
+
+      #page {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @keyframes drawLine {
+        from {
+          stroke-dashoffset: 5000;
+        }
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="page">
+      <svg viewBox="0 0 1600 500">
+        <path
+          id="ecg"
+          d="
+M0 250
+
+L180 250
+
+L220 250
+L250 180
+L280 320
+L310 120
+L340 250
+
+L680 250
+
+C610 210 560 120 560 80
+C560 10 620 -10 700 80
+
+C780 -10 840 10 840 80
+C840 120 790 210 720 250
+
+C710 255 705 255 700 250
+
+C690 265 685 280 700 290
+C715 280 710 265 700 250
+
+L760 250
+
+L1120 250
+
+L1150 180
+L1180 320
+L1210 120
+L1240 250
+
+L1600 250
+"
+        />
+      </svg>
+    </div>
+  </body>
+  <script>
+    const ecg = document.getElementById("ecg");
+    const page = document.getElementById("page");
+
+    ecg.addEventListener("animationend", () => {
+      page.classList.add("slide-away");
+
+      setTimeout(() => {
+        document.body.style.background = "#000";
+        window.location.href = "glitter.html";
+      }, 1500);
+    });
+  </script>
+</html>

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        overflow: hidden;
+        background: linear-gradient(to bottom, #050814, #120b30);
+      }
+
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const burst = [];
+
+      class BurstParticle {
+        constructor() {
+          this.x = canvas.width / 2;
+          this.y = canvas.height / 2;
+
+          const a = Math.random() * Math.PI * 2;
+          const s = Math.random() * 6 + 2;
+
+          this.vx = Math.cos(a) * s;
+          this.vy = Math.sin(a) * s;
+
+          this.life = 80;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.life--;
+        }
+
+        draw() {
+          ctx.globalAlpha = this.life / 80;
+
+          ctx.fillStyle = "#ffd6ff";
+
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.globalAlpha = 1;
+        }
+      }
+      function resize() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+      }
+      resize();
+      addEventListener("resize", resize);
+
+      // ------------------ TIMELINE ------------------
+
+      const startTime = Date.now();
+
+      let balloonX = canvas.width + 200;
+      let balloonY = canvas.height / 2 - 120;
+      let sixSlideY = canvas.height / 2 - 100;
+      let sixSlideDone = false;
+
+      let burstCreated = false;
+      let phase = 0;
+      let phaseStart = 0;
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get("skip") === "true") {
+        phase = 4;
+        burstCreated = true;
+        phaseStart = Date.now();
+      }
+
+      let oldDigitX = canvas.width / 2 + 50; // where 3 sits
+      let newDigitX = canvas.width / 2 + 170; // where 4 stops initially
+
+      let balloonTransfer = 0;
+      let sixX;
+      let stars = [];
+
+      for (let i = 0; i < 150; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 1,
+          alpha: Math.random(),
+        });
+      }
+
+      function drawStars() {
+        stars.forEach((s) => {
+          s.alpha += (Math.random() - 0.5) * 0.08;
+
+          if (s.alpha < 0.1) s.alpha = 0.1;
+          if (s.alpha > 1) s.alpha = 1;
+
+          ctx.globalAlpha = s.alpha;
+
+          ctx.fillStyle = "white";
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+      }
+
+      function drawBalloon(x, y) {
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + 30);
+        ctx.lineTo(x, y + 90);
+        ctx.stroke();
+
+        ctx.fillStyle = "#ff7ac6";
+
+        ctx.beginPath();
+        ctx.ellipse(x, y, 35, 45, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawYear() {
+        ctx.font = "bold 120px Arial";
+        ctx.textAlign = "center";
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        ctx.fillStyle = "#a9b6ff";
+
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#8ea2ff";
+
+        ctx.fillText("2", centerX - 60, centerY);
+
+        // show 5 until float-away starts
+        if (phase < 2) {
+          ctx.fillText("3", oldDigitX, centerY);
+        }
+
+        if (phase >= 3) {
+          ctx.fillText("4", newDigitX, centerY);
+        }
+
+        ctx.shadowBlur = 0;
+      }
+
+      function drawFloatingFive() {
+        if (phase !== 2) return;
+
+        const t = (Date.now() - phaseStart) / 2500;
+
+        const y = canvas.height / 2 - t * 300;
+
+        drawBalloon(canvas.width / 2 + 50, y - 120);
+
+        ctx.fillStyle = "#a9b6ff";
+        ctx.font = "bold 120px Arial";
+        ctx.textAlign = "center";
+
+        ctx.fillText("3", canvas.width / 2 + 50, y);
+      }
+
+      function drawBirthdayMessage() {
+        if (phase < 4) return;
+
+        const elapsed = Date.now() - phaseStart;
+
+        const progress = Math.min(elapsed / 1500, 1);
+
+        const alpha = progress;
+
+        const rise = (1 - progress) * 40;
+
+        ctx.save();
+
+        ctx.globalAlpha = alpha;
+
+        ctx.translate(canvas.width / 2, canvas.height / 2 + 120 - rise);
+        const scale = 0.9 + progress * 0.1;
+        ctx.scale(scale, scale);
+
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "#ffd6ff";
+
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#ffd6ff";
+
+        ctx.font = " 45px Arial";
+        ctx.fillText("✨HAPPY BIRTHDAY✨", 0, 0);
+
+        ctx.font = "32px Arial";
+        ctx.fillText(" Congrats, You're Even More Ancient Now 😈💀😏", 0, 55);
+
+        ctx.font = "28px Arial";
+        ctx.fillText(
+          " 👹I was on my way to inner peace, then you smiled😭👹",
+          0,
+          100,
+        );
+
+        ctx.restore();
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawStars();
+        if (phase === 4 && burstCreated) {
+          drawYear();
+          drawBirthdayMessage();
+          return;
+        }
+
+        for (let i = burst.length - 1; i >= 0; i--) {
+          burst[i].update();
+          burst[i].draw();
+
+          if (burst[i].life <= 0) {
+            burst.splice(i, 1);
+          }
+        }
+
+        drawYear();
+
+        const elapsed = Date.now() - startTime;
+
+        // Phase 0 - Balloon carrying 6 arrives
+
+        if (elapsed < 4000) {
+          sixX = balloonX;
+
+          const targetX = canvas.width / 2 + 170;
+
+          balloonX += (targetX - balloonX) * 0.03;
+          drawBalloon(balloonX, canvas.height / 2 - 170);
+
+          // same style as year digits
+          ctx.fillStyle = "#a9b6ff";
+          ctx.font = "bold 120px Arial";
+          ctx.textAlign = "center";
+
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = "#8ea2ff";
+
+          ctx.fillText("4", balloonX, canvas.height / 2);
+
+          ctx.shadowBlur = 0;
+        } else if (phase === 0) {
+          phase = 1;
+          phaseStart = Date.now();
+        }
+
+        // Phase 1 - Pause
+
+        if (phase === 1) {
+          const targetY = canvas.height / 2;
+
+          sixSlideY += (targetY - sixSlideY) * 0.08;
+
+          balloonTransfer += 0.02;
+
+          if (balloonTransfer > 1) balloonTransfer = 1;
+
+          // Balloon slides horizontally from above 4 to above 3
+          const startX = newDigitX;
+          const endX = oldDigitX;
+
+          const ease = 1 - Math.pow(1 - balloonTransfer, 3);
+
+          const bx = startX + (endX - startX) * ease;
+
+          drawBalloon(bx, canvas.height / 2 - 170);
+
+          // Draw waiting 4
+          ctx.fillStyle = "#a9b6ff";
+          ctx.font = "bold 120px Arial";
+          ctx.textAlign = "center";
+
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = "#8ea2ff";
+
+          ctx.fillText("4", newDigitX, canvas.height / 2);
+
+          ctx.shadowBlur = 0;
+
+          if (balloonTransfer >= 1) {
+            phase = 2;
+            phaseStart = Date.now();
+          }
+        }
+        // Phase 2 - balloon lifts 3, 4 slides into place
+
+        if (phase === 2) {
+          const t = Math.min((Date.now() - phaseStart) / 2500, 1);
+
+          // 3 floating upward
+          const floatingY = canvas.height / 2 - t * 300;
+
+          drawBalloon(oldDigitX, floatingY - 160);
+
+          ctx.fillStyle = "#a9b6ff";
+          ctx.font = "bold 120px Arial";
+          ctx.textAlign = "center";
+
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = "#8ea2ff";
+
+          ctx.globalAlpha = 1 - t;
+
+          ctx.fillText("3", oldDigitX, floatingY);
+
+          ctx.globalAlpha = 1;
+
+          // 4 sliding left
+          newDigitX += (oldDigitX - newDigitX) * 0.06;
+
+          ctx.fillText("4", newDigitX, canvas.height / 2);
+
+          ctx.shadowBlur = 0;
+
+          // finish animation
+          if (Math.abs(newDigitX - oldDigitX) < 2) {
+            newDigitX = oldDigitX;
+
+            phase = 3;
+            phaseStart = Date.now();
+          }
+        }
+
+        // Phase 3 - show 2026
+
+        if (phase === 3) {
+          // create sparkle burst once
+          if (!burstCreated) {
+            burstCreated = true;
+
+            for (let i = 0; i < 250; i++) {
+              burst.push(new BurstParticle());
+            }
+          }
+
+          if (Date.now() - phaseStart > 1500) {
+            phase = 4;
+            phaseStart = Date.now();
+          }
+        }
+        drawBirthdayMessage();
+        console.log(phase);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
+s
